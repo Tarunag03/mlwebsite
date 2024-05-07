@@ -63,7 +63,7 @@
                 // Add text from codefile.txt to the PDF document
                 doc.text(text, 10, 10);
                 // Save the PDF file with a namen
-                doc.save(filepath[1]+'.pdf');
+                doc.save(filePath[1]+'.pdf');
             })
             .catch(error => console.error('Error fetching file:', error));
         }
