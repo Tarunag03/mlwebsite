@@ -55,7 +55,7 @@
             .then(response => response.text())
             .then(text => {
                 // Create a new jsPDF instance
-                var pdf = new jsPDF('p', 'pt', 'a4');
+                var doc = new jsPDF('p', 'pt', 'a4');
                 // Add text from codefile.txt to the PDF document
                 doc.text(text, 10, 10);
                 // Save the PDF file with a name
