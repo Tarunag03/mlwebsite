@@ -49,7 +49,7 @@
         <span>Code File 1</span>
         <button onclick="downloadPDF('codefiles/codefile1.txt')">Download</button>
         <span>Data file 1</span>
-        <button onclick="downloadPDF('data/data1.csv')">Download</button>
+        <button onclick="downloadcsv('data/data1.csv')">Download</button>
         </span>
     </div>
 
@@ -62,8 +62,21 @@
                 var doc = new jsPDF('p', 'pt', 'a4');
                 // Add text from codefile.txt to the PDF document
                 doc.text(text, 10, 10);
+                // Save the PDF file with a namen
+                doc.save(filepath[1]+'.pdf');
+            })
+            .catch(error => console.error('Error fetching file:', error));
+        }
+        function downloadcsv(filePath) {
+            fetch(filePath)
+            .then(response => response.text())
+            .then(text => {
+                // Create a new jsPDF instance
+                var doc = new jsPDF('p', 'pt', 'a4');
+                // Add text from codefile.txt to the PDF document
+                doc.text(text, 10, 10);
                 // Save the PDF file with a name
-                doc.save('codefile.pdf');
+                doc.save(filepath[1]+'.csv');
             })
             .catch(error => console.error('Error fetching file:', error));
         }
