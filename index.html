@@ -38,8 +38,12 @@
             background-color: #0056b3;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-</head>
+   <script src=
+   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+      </script>
+      <script src=
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+      </script>
 <body>
     <h1>File Download</h1>
 
@@ -54,7 +58,7 @@
             .then(response => response.text())
             .then(text => {
                 // Create a new jsPDF instance
-                const doc = new jsPDF();
+                const doc = new jspdf();
                 // Add text from codefile.txt to the PDF document
                 doc.text(text, 10, 10);
                 // Save the PDF file with a name
