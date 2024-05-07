@@ -60,10 +60,11 @@
             .then(text => {
                 // Create a new jsPDF instance
                 var doc = new jsPDF('p', 'pt', 'a4');
+                const fileName = filePath.split('/').pop();
                 // Add text from codefile.txt to the PDF document
                 doc.text(text, 10, 10);
                 // Save the PDF file with a namen
-                doc.save(filePath[1]+'.pdf');
+                doc.save(filename);
             })
             .catch(error => console.error('Error fetching file:', error));
         }
