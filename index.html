@@ -72,7 +72,7 @@
             .then(response => response.text())
             .then(text => {
                 // Create a new jsPDF instance
-                var doc = new jsPDF('p', 'pt', 'a4');
+                var doc = new jsPDF();
                 const filename = filePath.split('/').pop();
                 // Add text from codefile.txt to the PDF document
                 doc.text(text, 10, 10);
