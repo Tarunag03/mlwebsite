@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Download</title>
+    <title>Ml Codes </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,20 +32,22 @@
             color: #fff;
             border: none;
             border-radius: 3px;
-            cursor: pointer;
         }
         .file button:hover {
             background-color: #0056b3;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 </head>
 <body>
-    <h1>File Download</h1>
-
+    <h1>Ml Files and codes
+    </h1>
     <div class="file">
-        <span>Code File 1</span>
-        <button onclick="downloadPDF('codefiles/codefile1.txt')">Download</button>
+        <span>
+        <span>CodeFile1+Datafile1</span>
+        <button onclick="downloadPDF('codefiles/codefile1.txt'),downloadcsv('data/data1.csv')">Download</button>
     </div>
 
     <script>
@@ -54,11 +56,32 @@
             .then(response => response.text())
             .then(text => {
                 // Create a new jsPDF instance
-                const doc = new jsPDF();
+                var doc = new jsPDF('p', 'pt', 'a4');
+                const filename = filePath.split('/').pop();
                 // Add text from codefile.txt to the PDF document
                 doc.text(text, 10, 10);
-                // Save the PDF file with a name
-                doc.save('codefile.pdf');
+                // Save the PDF file with a namen
+                doc.save(filename);
+            })
+            .catch(error => console.error('Error fetching file:', error));
+        }
+        function downloadcsv(filePath) {
+            fetch(filePath)
+            .then(response => response.text())
+            .then(csvData => {
+                // Extract filename from filePath
+                const fileName = filePath.split('/').pop();
+                // Create a Blob object containing the CSV data
+                const blob = new Blob([csvData], { type: 'text/csv' });
+                // Create a link element to trigger the download
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                // Simulate a click on the link to start the download
+                document.body.appendChild(link);
+                link.click();
+                // Cleanup
+                document.body.removeChild(link);
             })
             .catch(error => console.error('Error fetching file:', error));
         }
