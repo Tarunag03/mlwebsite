@@ -1,0 +1,61 @@
+import numpy as np 
+import matplotlib.pyplot as plt 
+import pandas as pd 
+from sklearn import tree
+dataset = np.array( 
+[['Chocolate',100, 1000], 
+['car', 500, 3000], 
+['auto', 1500, 5000], 
+['taxi', 3500, 8000], 
+['truck', 5000, 6500], 
+['bmw', 6000, 7000], 
+['nexon', 8000, 15000], 
+['exter', 9500, 20000], 
+['brezza', 12000, 21000], 
+['trivia', 14000, 25000], 
+['ne', 15500, 27000], 
+['XYR7', 16500, 30000], 
+['Audi', 2500, 112000], 
+['BMW', 3000, 8000],
+ ['exter', 9500, 20000], 
+['brezza', 12000, 21000], 
+['trivia', 14000, 25000], 
+['ne', 15500, 27000], 
+['XYR7', 16500, 30000], 
+['Audi', 2500, 112000], 
+['BMW', 3000, 8000] ,
+]) 
+
+print(dataset)  
+X = dataset[:, 1:2].astype(int)
+print(X)
+y = dataset[:, 2].astype(int)  
+print(y)
+from sklearn.tree import DecisionTreeRegressor 
+regressor = DecisionTreeRegressor(random_state = 0) 
+regressor.fit(X, y)
+
+y_pred = regressor.predict([[3750]]) 
+print("Predicted price: % d\n"% y_pred) 
+
+X_grid = np.arange(min(X), max(X), 0.01) 
+
+
+X_grid = X_grid.reshape((len(X_grid), 1)) 
+
+plt.scatter(X, y, color = 'red') 
+
+plt.plot(X_grid, regressor.predict(X_grid), color = 'blue') 
+
+plt.title('Profit to Production Cost (Decision Tree Regression)') 
+
+plt.xlabel('Production Cost') 
+plt.ylabel('Profit') 
+plt.show() 
+from sklearn.tree import export_graphviz 
+
+export_graphviz(regressor, out_file ='tree.dot', 
+feature_names =['Production Cost']) 
+from sklearn.tree import export_graphviz
+export_graphviz(regressor,out_file='tarun.dot',feature_names=['Production cost'])
+tree.plot_tree(regressor)
