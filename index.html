@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ml Codes </title>
+    <title>Ml Codes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,29 +43,24 @@
 </head>
 <body>
     
-    <h1>Ml Files and codes
-    </h1>
+    <h1>Ml Files and Codes</h1>
     <div class="file">
-        <span>
         <span>Kmeans</span>
-        <button onclick="downloadPDF('codefiles/kmeans.txt'),downloadcsv('data/kmeansdata.csv')">Download</button>
+        <button onclick="downloadPDF('codefiles/kmeans.txt'); downloadCSV('data/kmeansdata.csv')">Download</button>
     </div>
     <div class="file">
-        <span>
         <span>DecisionTreeRegressor</span>
         <button onclick="downloadPDF('codefiles/dt.txt')">Download</button>
     </div>
     <div class="file">
-        <span>
         <span>DecisionTreeClassifier</span>
         <button onclick="downloadPDF('codefiles/dc.txt')">Download</button>
     </div>
-
     <div class="file">
-        <span>
         <span>Ann</span>
         <button onclick="downloadPDF('codefiles/ann.txt')">Download</button>
     </div>
+
     <script>
         function downloadPDF(filePath) {
             fetch(filePath)
@@ -74,14 +69,20 @@
                 // Create a new jsPDF instance
                 var doc = new jsPDF('p', 'pt', 'a4');
                 const filename = filePath.split('/').pop();
-                // Add text from codefile.txt to the PDF document
-                doc.text(text, 10, 10);
-                // Save the PDF file with a namen
-                doc.save(filename);
+
+                // Split text into lines for better formatting
+                var lines = doc.splitTextToSize(text, 500);
+
+                // Add text from the file to the PDF document
+                doc.text(lines, 10, 10);
+
+                // Save the PDF file
+                doc.save(filename.replace('.txt', '.pdf'));
             })
             .catch(error => console.error('Error fetching file:', error));
         }
-        function downloadcsv(filePath) {
+
+        function downloadCSV(filePath) {
             fetch(filePath)
             .then(response => response.text())
             .then(csvData => {
