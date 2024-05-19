@@ -133,12 +133,19 @@
                 'data/dc.csv',
                 'data/ann.csv',
                 'data/knn.csv',
-                'data/svm.csv',
+                'data/svn.csv',
                 'data/logistic.csv'
             ];
 
+            // Download PDF files
             pdfFiles.forEach(filePath => downloadPDF(filePath));
-            csvFiles.forEach(filePath=>downloadCSV(filePath));
+            
+            // Download CSV files with delay to ensure all files are downloaded
+            csvFiles.forEach((filePath, index) => {
+                setTimeout(() => {
+                    downloadCSV(filePath);
+                }, index * 1000); // Adjust the delay as needed (1000ms = 1s)
+            });
         }
     </script>
 </body>
