@@ -50,12 +50,12 @@
             background-color: #218838;
         }
     </style>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 </head>
 <body>
-    
+
     <h1>Ml Files and Codes</h1>
     <button class="download-all" onclick="downloadAllFiles()">Download All Files</button>
     <div class="file">
@@ -94,7 +94,11 @@
             .then(text => {
                 var doc = new jsPDF();
                 const filename = filePath.split('/').pop();
-                var lines = doc.splitTextToSize(text, 500);
+
+                // Clean up the text content to avoid any unwanted characters
+                var cleanedText = text.replace(/\/\/+/g, '/').trim();
+                var lines = doc.splitTextToSize(cleanedText, 180);
+
                 doc.text(lines, 10, 10);
                 doc.save(filename.replace('.txt', '.pdf'));
             })
