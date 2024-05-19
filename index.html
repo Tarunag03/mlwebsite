@@ -36,6 +36,19 @@
         .file button:hover {
             background-color: #0056b3;
         }
+        .download-all {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .download-all:hover {
+            background-color: #218838;
+        }
     </style>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
@@ -44,6 +57,7 @@
 <body>
     
     <h1>Ml Files and Codes</h1>
+    <button class="download-all" onclick="downloadAllFiles()">Download All Files</button>
     <div class="file">
         <span>Kmeans</span>
         <button onclick="downloadPDF('codefiles/kmeans.txt'); downloadCSV('data/kmeansdata.csv')">Download</button>
@@ -54,23 +68,23 @@
     </div>
     <div class="file">
         <span>DecisionTreeClassifier</span>
-        <button onclick="downloadPDF('codefiles/dc.txt'),downloadCSV('data/dc.csv')">Download</button>
+        <button onclick="downloadPDF('codefiles/dc.txt'); downloadCSV('data/dc.csv')">Download</button>
     </div>
     <div class="file">
         <span>Ann</span>
-        <button onclick="downloadPDF('codefiles/ann.txt'),downloadCSV('data/ann.csv')">Download</button>
+        <button onclick="downloadPDF('codefiles/ann.txt'); downloadCSV('data/ann.csv')">Download</button>
     </div>
     <div class="file">
         <span>knn</span>
-        <button onclick="downloadPDF('codefiles/knn.txt'),downloadCSV('data/knn.csv')">Download</button>
+        <button onclick="downloadPDF('codefiles/knn.txt'); downloadCSV('data/knn.csv')">Download</button>
     </div>
     <div class="file">
         <span>svm</span>
-        <button onclick="downloadPDF('codefiles/svm.txt'),downloadCSV('data/svn.csv')">Download</button>
+        <button onclick="downloadPDF('codefiles/svm.txt'); downloadCSV('data/svn.csv')">Download</button>
     </div>
     <div class="file">
         <span>logistic</span>
-        <button onclick="downloadPDF('codefiles/logistic.txt'),downloadCSV('data/logistic.csv')">Download</button>
+        <button onclick="downloadPDF('codefiles/logistic.txt'); downloadCSV('data/logistic.csv')">Download</button>
     </div>
 
     <script>
@@ -78,17 +92,10 @@
             fetch(filePath)
             .then(response => response.text())
             .then(text => {
-                // Create a new jsPDF instance
                 var doc = new jsPDF();
                 const filename = filePath.split('/').pop();
-
-                // Split text into lines for better formatting
                 var lines = doc.splitTextToSize(text, 500);
-
-                // Add text from the file to the PDF document
                 doc.text(lines, 10, 10);
-
-                // Save the PDF file
                 doc.save(filename.replace('.txt', '.pdf'));
             })
             .catch(error => console.error('Error fetching file:', error));
@@ -98,21 +105,40 @@
             fetch(filePath)
             .then(response => response.text())
             .then(csvData => {
-                // Extract filename from filePath
                 const fileName = filePath.split('/').pop();
-                // Create a Blob object containing the CSV data
                 const blob = new Blob([csvData], { type: 'text/csv' });
-                // Create a link element to trigger the download
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
                 link.download = fileName;
-                // Simulate a click on the link to start the download
                 document.body.appendChild(link);
                 link.click();
-                // Cleanup
                 document.body.removeChild(link);
             })
             .catch(error => console.error('Error fetching file:', error));
+        }
+
+        function downloadAllFiles() {
+            const pdfFiles = [
+                'codefiles/kmeans.txt',
+                'codefiles/dt.txt',
+                'codefiles/dc.txt',
+                'codefiles/ann.txt',
+                'codefiles/knn.txt',
+                'codefiles/svm.txt',
+                'codefiles/logistic.txt'
+            ];
+            
+            const csvFiles = [
+                'data/kmeansdata.csv',
+                'data/dc.csv',
+                'data/ann.csv',
+                'data/knn.csv',
+                'data/svn.csv',
+                'data/logistic.csv'
+            ];
+
+            pdfFiles.forEach(filePath => downloadPDF(filePath));
+            csvFiles.forEach(filePath => downloadCSV(filePath));
         }
     </script>
 </body>
